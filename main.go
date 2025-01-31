@@ -1,6 +1,7 @@
 package main
 
 import (
+	"os"
 	"wereserve/controller"
 	"wereserve/initializer"
 	"wereserve/middleware"
@@ -11,7 +12,7 @@ import (
 )
 
 func init( ) {
-	initializer.LoadEnvVariable()
+	// initializer.LoadEnvVariable()
 	initializer.ConnectDB()
 	initializer.SyncMigrate()
 }
@@ -71,6 +72,6 @@ func main() {
 	r.GET("/customer/reserve/me", authMiddleware,reservationController.GetMyReservation)
 	r.GET("/customer/reserve", authMiddleware,reservationController.GetAllReservation)
 
-	r.Run()
+	r.Run(":" + os.Getenv("PORT"))
 
 }
